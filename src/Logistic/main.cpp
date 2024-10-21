@@ -10,7 +10,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hwnd, &ps);
 
-            // Establecer el color de fondo a negro
+            // Establecer el color de fondo a negro para toda la ventana
             HBRUSH backgroundBrush = CreateSolidBrush(RGB(0, 0, 0)); // Crear un pincel negro
             FillRect(hdc, &ps.rcPaint, backgroundBrush); // Rellenar el área de la ventana
             DeleteObject(backgroundBrush); // Eliminar el pincel después de usarlo
@@ -19,24 +19,25 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
             int x = 100, y = 80, size = 200; // Tamaño del cuadrado
 
             // Rellenar el cuadrado con negro
-            HBRUSH squareBrush = CreateSolidBrush(RGB(0, 0, 0)); // Crear un pincel negro
+            HBRUSH squareBrush = CreateSolidBrush(RGB(0, 0, 0)); // Crear un pincel negro para el cuadrado
             RECT squareRect = { x, y, x + size, y + size }; // Crear un RECT para el cuadrado
-            FillRect(hdc, &squareRect, squareBrush); // Rellenar el cuadrado
+            FillRect(hdc, &squareRect, squareBrush); // Rellenar el cuadrado con negro
             DeleteObject(squareBrush); // Eliminar el pincel después de usarlo
 
             // Dibujar el borde verde
             HPEN borderPen = CreatePen(PS_SOLID, 3, RGB(0, 255, 0)); // Crear un lápiz verde
             HGDIOBJ oldPen = SelectObject(hdc, borderPen); // Seleccionar el lápiz verde
-            Rectangle(hdc, x, y, x + size, y + size); // Dibujar el borde del cuadrado
+            SelectObject(hdc, GetStockObject(NULL_BRUSH)); // Para que no rellene el rectángulo
+            Rectangle(hdc, x, y, x + size, y + size); // Dibujar solo el borde del cuadrado
 
             // Restaurar el lápiz original
             SelectObject(hdc, oldPen);
             DeleteObject(borderPen); // Eliminar el lápiz después de usarlo
 
             // Dibujar el texto "inventory" en verde
-            SetBkMode(hdc, RGB(0, 0, 0)); // Hacer el fondo del texto transparente
+            SetBkMode(hdc, TRANSPARENT); // Hacer el fondo del texto transparente
             SetTextColor(hdc, RGB(0, 255, 0)); // Color del texto (verde)
-            TextOut(hdc, x + 50, y + 90, "inventory", 9); // Dibujar el texto
+            TextOut(hdc, x + 90, y + 90, "Inventory", 9); // Dibujar el texto
 
             EndPaint(hwnd, &ps);
         }
