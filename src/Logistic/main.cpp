@@ -1,4 +1,5 @@
 #include <windows.h>
+// #include "interlang.h"
 
 // Función de procesamiento de mensajes
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
