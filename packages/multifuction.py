@@ -4,6 +4,7 @@ import os
 import sys
 import time
 import shutil
+import math
 
 
 # Clase para la generación de números primos
@@ -131,7 +132,10 @@ class FileCreate:
     
 class CompileFile:
 
-    def compiler(language, route_file):
+    def compiler(self, language, route_file):
+
+        self.language = language
+
         if language == "python":
             os.system(f"python {route_file}")
         elif language == "java":
@@ -143,6 +147,16 @@ class CompileFile:
         else:
             print("Language unssuported")
     
+class Factorial:
+    
+    def factorial(self, n):
+        self.n = n
+
+        if n == 0 or n == 1:
+            return 1
+        else:
+            return n * n - 1
+
 
 
 # Programa principal
